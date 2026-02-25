@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import glob
-from src.config import PROFILGRUPPEN_PATH, SIBBHULTSVERKEN_PATH
+from src.config import PR_PATH, SI_PATH
 
 def load_company_data(company_path, company_name):
     """
@@ -30,13 +30,13 @@ def load_company_data(company_path, company_name):
 
 def load_all_data():
     # Load data for both companies
-    profilgruppen_data = load_company_data(PROFILGRUPPEN_PATH, "Profilgruppen")
-    sibbhultsverken_data = load_company_data(SIBBHULTSVERKEN_PATH, "Sibbhultsverken")
+    XXX1_data = load_company_data(PR_PATH, "XXX")
+    XXX2_data = load_company_data(SI_PATH, "XXX")
 
     # Create structured data dictionary
     data_by_company = {
-        'profilgruppen': profilgruppen_data,
-        'sibbhultsverken': sibbhultsverken_data
+        'pr': pr_data,
+        'si': sin_data
     }
     
     return data_by_company
