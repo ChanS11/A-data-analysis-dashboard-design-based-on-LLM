@@ -3,5 +3,5 @@
 OPENAI_API_KEY = ""
 
 # Data Paths
-PROFILGRUPPEN_PATH = r"E:\llm\YOUR DATA"
-SIBBHULTSVERKEN_PATH = r"E:\llm\"YOUR DATA."
+PR_PATH = r"E:\llm\YOUR DATA"
+SI_PATH = r"E:\llm\"YOUR DATA."
