@@ -9,25 +9,25 @@ from src.analysis.ai_insights import generate_ai_insights
 
 def create_ui(data_by_company):
     # Extract data for easy access
-    profilgruppen_data = data_by_company.get('profilgruppen', {})
-    sibbhultsverken_data = data_by_company.get('sibbhultsverken', {})
+    pr_data = data_by_company.get('pr', {})
+    si_data = data_by_company.get('si', {})
 
-    df_profilgruppen_setting = profilgruppen_data.get('setting')
-    df_profilgruppen_worktime = profilgruppen_data.get('worktime')
-    df_profilgruppen_stop = profilgruppen_data.get('stop')
+    df_pr_setting = pr_data.get('setting')
+    df_pr_worktime = pr_data.get('worktime')
+    df_pr_stop = pr_data.get('stop')
 
-    df_sibbhultsverken_setting = sibbhultsverken_data.get('setting')
-    df_sibbhultsverken_worktime = sibbhultsverken_data.get('worktime')
-    df_sibbhultsverken_stop = sibbhultsverken_data.get('stop')
+    df_si_setting = si_data.get('setting')
+    df_si_worktime = si_data.get('worktime')
+    df_si_stop = si_data.get('stop')
 
     # Get all unique stop reasons
-    all_stop_reasons_pg = sorted(df_profilgruppen_stop['StopReason'].unique().tolist()) if df_profilgruppen_stop is not None else []
-    all_stop_reasons_sh = sorted(df_sibbhultsverken_stop['StopReason'].unique().tolist()) if df_sibbhultsverken_stop is not None else []
+    all_stop_reasons_pr = sorted(df_pr_stop['StopReason'].unique().tolist()) if df_pr_stop is not None else []
+    all_stop_reasons_si = sorted(df_si_stop['StopReason'].unique().tolist()) if df_si_stop is not None else []
 
     # Widgets
     company_selector = widgets.Dropdown(
-        options=['Profilgruppen', 'Sibbhultsverken'],
-        value='Profilgruppen',
+        options=['pr', 'si'],
+        value='pr',
         description='Company:',
         style={'description_width': 'initial'}
     )
@@ -159,17 +159,17 @@ def create_ui(data_by_company):
         analysis = get_analysis_value()
         
         # Update Stop Reasons
-        if company == 'Profilgruppen':
-            stop_reason_selector.options = all_stop_reasons_pg
+        if company == 'pr':
+            stop_reason_selector.options = all_stop_reasons_pr
             # Update Shifts
-            if df_profilgruppen_worktime is not None and 'Shift' in df_profilgruppen_worktime.columns:
-                shifts = sorted(df_profilgruppen_worktime['Shift'].dropna().unique().tolist())
+            if df_pr_worktime is not None and 'Shift' in df_pr_worktime.columns:
+                shifts = sorted(df_pr_worktime['Shift'].dropna().unique().tolist())
                 exclude_shift_selector.options = shifts
         else:
-            stop_reason_selector.options = all_stop_reasons_sh
+            stop_reason_selector.options = all_stop_reasons_si
             # Update Shifts
-            if df_sibbhultsverken_worktime is not None and 'Shift' in df_sibbhultsverken_worktime.columns:
-                shifts = sorted(df_sibbhultsverken_worktime['Shift'].dropna().unique().tolist())
+            if df_si_worktime is not None and 'Shift' in df_si_worktime.columns:
+                shifts = sorted(df_si_worktime['Shift'].dropna().unique().tolist())
                 exclude_shift_selector.options = shifts
                 
         # Enable/Disable widgets based on analysis type
@@ -205,14 +205,14 @@ def create_ui(data_by_company):
         include_recommendations = include_recommendations_checkbox.value
         
         # Select Data
-        if company == 'Profilgruppen':
-            df_w = df_profilgruppen_worktime
-            df_s = df_profilgruppen_stop
-            df_set = df_profilgruppen_setting
+        if company == 'pr':
+            df_w = df_pr_worktime
+            df_s = df_pr_stop
+            df_set = df_pr_setting
         else:
-            df_w = df_sibbhultsverken_worktime
-            df_s = df_sibbhultsverken_stop
-            df_set = df_sibbhultsverken_setting
+            df_w = df_si_worktime
+            df_s = df_si_stop
+            df_set = df_si_setting
             
         with output_area:
             if analysis == 'OEE Overview':
