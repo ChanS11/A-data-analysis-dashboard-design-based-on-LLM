@@ -30,13 +30,13 @@ def load_company_data(company_path, company_name):
 
 def load_all_data():
     # Load data for both companies
-    XXX1_data = load_company_data(PR_PATH, "XXX")
-    XXX2_data = load_company_data(SI_PATH, "XXX")
+    pr_data = load_company_data(PR_PATH, "XXX")
+    si_data = load_company_data(SI_PATH, "XXX")
 
     # Create structured data dictionary
     data_by_company = {
         'pr': pr_data,
-        'si': sin_data
+        'si': si_data
     }
     
     return data_by_company
